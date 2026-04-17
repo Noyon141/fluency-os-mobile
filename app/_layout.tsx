@@ -3,6 +3,7 @@ import "@/global.css";
 
 import { PortalHost } from "@rn-primitives/portal";
 import { Stack } from "expo-router";
+import ToastManager from "toastify-react-native";
 
 export default function RootLayout() {
   return (
@@ -14,6 +15,7 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         </Stack>
         <PortalHost />
+        <ToastManager />
       </ThemeProvider>
     </>
   );

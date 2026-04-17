@@ -1,11 +1,12 @@
+import { SignInForm } from "@/components/forms/sign-in-form";
 import React from "react";
-import { Text } from "react-native";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignInScreen = () => {
   return (
-    <SafeAreaView>
-      <Text>SignInScreen</Text>
+    <SafeAreaView className="w-full h-screen flex items-center justify-center px-4">
+      <SignInForm />
     </SafeAreaView>
   );
 };
