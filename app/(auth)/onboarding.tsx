@@ -80,7 +80,7 @@ const OnboardingScreen = () => {
             <View
               key={idx}
               className={`h-2 mx-1 rounded-full transition-all duration-300 ${
-                currentIndex === idx ? "w-10 bg-inherit " : "w-3 bg-gray-500"
+                currentIndex === idx ? "w-10 bg-gray-500 " : "w-3 bg-gray-500"
               }`}
             />
           ))}
