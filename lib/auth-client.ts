@@ -5,11 +5,11 @@ import { Platform } from "react-native";
 
 // 1. Determine the Base URL dynamically
 const getBaseUrl = () => {
-  if (process.env.EXPO_PUBLIC_API_URL)
-    return `${process.env.EXPO_PUBLIC_API_URL}`;
+  if (process.env.EXPO_PUBLIC_API_URL!)
+    return `${process.env.EXPO_PUBLIC_API_URL!}`;
   // Fallback for local dev
   if (Platform.OS === "android") return "http://10.0.2.2:3000";
-  return "http://192.168.0.198:3000";
+  return "http://192.168.0.195:3000";
 };
 
 const baseUrl = getBaseUrl();
@@ -17,7 +17,7 @@ const baseUrl = getBaseUrl();
 console.log("Auth Client Base URL:", baseUrl);
 
 export const authClient = createAuthClient({
-  baseURL: getBaseUrl(),
+  baseURL: baseUrl,
 
   fetchOptions: {
     onError: async (ctx) => {

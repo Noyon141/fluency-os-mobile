@@ -40,42 +40,29 @@ export function SignUpForm() {
   }
 
   async function onSubmit() {
-    setLoading(true);
-
-    try {
-      const { error } = await authClient.signUp.email(
-        {
-          name,
-          email,
-          password,
+    await authClient.signUp.email(
+      {
+        name,
+        email,
+        password,
+      },
+      {
+        onRequest: () => {
+          setLoading(true);
+          Toast.info("Signing up...");
         },
-        {
-          onRequest: () => {
-            setLoading(true);
-            Toast.info("Signing up...");
-          },
-          onSuccess: async () => {
-            Toast.success("Signed up successfully!");
-            setLoading(false);
-          },
-
-          onError: (error) => {
-            console.log("Error signing up:", error);
-            Toast.error("Failed to sign up. Please check your credentials.");
-            setLoading(false);
-          },
+        onSuccess: async () => {
+          Toast.success("Signed up successfully!");
+          setLoading(false);
         },
-      );
 
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log("Error signing up:", error);
-      Toast.error("Failed to sign up. Please check your credentials.");
-      return;
-    }
+        onError: (error) => {
+          console.log("Error signing up:❌", error);
+          Toast.error("Failed to sign up. Please check your credentials.");
+          setLoading(false);
+        },
+      },
+    );
   }
 
   return (
