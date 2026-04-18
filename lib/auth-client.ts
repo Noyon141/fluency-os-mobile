@@ -1,4 +1,6 @@
+import { expoClient } from "@better-auth/expo/client";
 import { createAuthClient } from "better-auth/react";
+import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 
 // 1. Determine the Base URL dynamically
@@ -17,9 +19,6 @@ console.log("Auth Client Base URL:", baseUrl);
 export const authClient = createAuthClient({
   baseURL: getBaseUrl(),
 
-  // 2. We use a custom fetch implementation to handle session tokens via Headers
-  // if cookies are unreliable in your specific Expo environment.
-  // For now, Better Auth v1 handles this well, but let's be safe.
   fetchOptions: {
     onError: async (ctx) => {
       if (ctx.response.status === 401) {
@@ -28,6 +27,13 @@ export const authClient = createAuthClient({
       }
     },
   },
+  plugins: [
+    expoClient({
+      scheme: "fluencyosmobile",
+      storagePrefix: "fluencyosmobile",
+      storage: SecureStore,
+    }),
+  ],
 });
 
 // Helper to save token manually if needed (BetterAuth handles cookies mostly,
