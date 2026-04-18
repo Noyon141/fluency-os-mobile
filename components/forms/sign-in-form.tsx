@@ -11,26 +11,49 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
-import { useRouter } from "expo-router";
+import { authClient } from "@/lib/auth-client";
+import { Link } from "expo-router";
 import * as React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   type TextInput,
   View,
 } from "react-native";
+import { Toast } from "toastify-react-native";
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  const router = useRouter();
   function onEmailSubmitEditing() {
     passwordInputRef.current?.focus();
   }
 
-  function onSubmit() {
-    // TODO: Submit form and navigate to protected screen if successful
+  async function onSubmit() {
+    await authClient.signIn.email({
+      email: email,
+      password: password,
+      fetchOptions: {
+        onRequest: () => {
+          setLoading(true);
+        },
+        onSuccess: () => {
+          setLoading(false);
+
+          Toast.success("Signed in successfully!");
+        },
+        onError: (error) => {
+          setLoading(false);
+          console.log("Error signing in:❌", error);
+
+          Toast.error("Failed to sign in.");
+        },
+      },
+      callbackURL: "/(root)/(tabs)/home",
+    });
   }
 
   return (
@@ -60,6 +83,7 @@ export function SignInForm() {
                   autoCapitalize="none"
                   onSubmitEditing={onEmailSubmitEditing}
                   returnKeyType="next"
+                  onChangeText={setEmail}
                   submitBehavior="submit"
                 />
               </View>
@@ -71,6 +95,7 @@ export function SignInForm() {
                   secureTextEntry
                   returnKeyType="send"
                   onSubmitEditing={onSubmit}
+                  onChangeText={setPassword}
                 />
                 <View className="flex-row items-center">
                   <Label htmlFor="password">Password</Label>
@@ -88,21 +113,17 @@ export function SignInForm() {
                   </Button>
                 </View>
               </View>
-              <Button className="w-full" onPress={onSubmit}>
+              <Button className="w-full" onPress={onSubmit} disabled={loading}>
                 <Text>Continue</Text>
               </Button>
             </View>
             <Text className="text-center text-sm">
               Don&apos;t have an account?{" "}
-              <Pressable
-                onPress={() => {
-                  router.push("/(auth)/sign-up");
-                }}
-              >
+              <Link href={"/(auth)/sign-up"}>
                 <Text className="text-sm underline underline-offset-4">
                   Sign up
                 </Text>
-              </Pressable>
+              </Link>
             </Text>
             <View className="flex-row items-center">
               <Separator className="flex-1" />

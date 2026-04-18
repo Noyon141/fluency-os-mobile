@@ -11,18 +11,14 @@ import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { authClient } from "@/lib/auth-client";
 
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useRef, useState } from "react";
 
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  TextInput,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Toast } from "toastify-react-native";
+import { Separator } from "../ui/separator";
+import { SocialConnections } from "./social-connections";
 
 export function SignUpForm() {
   const passwordInputRef = useRef<TextInput>(null);
@@ -49,7 +45,6 @@ export function SignUpForm() {
       {
         onRequest: () => {
           setLoading(true);
-          Toast.info("Signing up...");
         },
         onSuccess: async () => {
           Toast.success("Signed up successfully!");
@@ -122,28 +117,24 @@ export function SignUpForm() {
                   onChangeText={setPassword}
                 />
               </View>
-              <Button className="w-full" onPress={onSubmit}>
-                <Text>Continue</Text>
+              <Button className="w-full" onPress={onSubmit} disabled={loading}>
+                <Text>Sign Up</Text>
               </Button>
             </View>
             <Text className="text-center text-sm">
               Already have an account?{" "}
-              <Pressable
-                onPress={() => {
-                  router.push("/(auth)/sign-in");
-                }}
-              >
+              <Link href={"/(auth)/sign-in"}>
                 <Text className="text-sm underline underline-offset-4">
                   Sign in
                 </Text>
-              </Pressable>
+              </Link>
             </Text>
-            {/* <View className="flex-row items-center">
-            <Separator className="flex-1" />
-            <Text className="text-muted-foreground px-4 text-sm">or</Text>
-            <Separator className="flex-1" />
-          </View>
-          <SocialConnections /> */}
+            <View className="flex-row items-center">
+              <Separator className="flex-1" />
+              <Text className="text-muted-foreground px-4 text-sm">or</Text>
+              <Separator className="flex-1" />
+            </View>
+            <SocialConnections />
           </CardContent>
         </Card>
       </SafeAreaView>
