@@ -2,12 +2,12 @@ import { Text } from "@/components/ui/text";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const TwoTab = () => {
+const HomeTab = () => {
   return (
     <SafeAreaView>
-      <Text>TwoTab</Text>
+      <Text>Home</Text>
     </SafeAreaView>
   );
 };
 
-export default TwoTab;
+export default HomeTab;
