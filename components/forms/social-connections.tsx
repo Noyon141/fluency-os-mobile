@@ -1,10 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useColorScheme } from "nativewind";
-import { useState } from "react";
 import { Image, Platform, View } from "react-native";
-import { Toast } from "toastify-react-native";
 
 const SOCIAL_CONNECTION_STRATEGIES = [
   {
@@ -16,25 +13,25 @@ const SOCIAL_CONNECTION_STRATEGIES = [
 
 export function SocialConnections() {
   const { colorScheme } = useColorScheme();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-      fetchOptions: {
-        onRequest: () => {
-          setLoading(true);
-        },
-        onSuccess: () => {
-          setLoading(false);
-          Toast.success("Signed in successfully!");
-        },
-        onError: () => {
-          setLoading(false);
-        },
-      },
-      callbackURL: "/(root)/(tabs)/home",
-    });
+    // await authClient.signIn.social({
+    //   provider: "google",
+    //   fetchOptions: {
+    //     onRequest: () => {
+    //       setLoading(true);
+    //     },
+    //     onSuccess: () => {
+    //       setLoading(false);
+    //       Toast.success("Signed in successfully!");
+    //     },
+    //     onError: () => {
+    //       setLoading(false);
+    //     },
+    //   },
+    //   callbackURL: "/(root)/(tabs)/home",
+    // });
   };
 
   return (
@@ -46,8 +43,6 @@ export function SocialConnections() {
             variant="outline"
             size="sm"
             className="sm:flex-1"
-            onPress={onSubmit}
-            disabled={loading}
           >
             <Image
               className={cn(

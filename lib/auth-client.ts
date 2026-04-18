@@ -34,6 +34,16 @@ export const authClient = createAuthClient({
       storage: SecureStore,
     }),
   ],
+
+  trustedOrigins: [
+    "http://localhost:3000",
+    "http://192.168.0.197:3000",
+    "http://192.168.0.199:3000",
+    "http://192.168.0.195:3000",
+    "http://192.168.0.198:3000",
+    "https://cavillingly-unoceanic-lavelle.ngrok-free.dev/",
+    "fluencyosmobile://*",
+  ],
 });
 
 // Helper to save token manually if needed (BetterAuth handles cookies mostly,
