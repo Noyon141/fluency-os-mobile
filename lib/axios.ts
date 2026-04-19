@@ -1,8 +1,9 @@
+import { getCookie } from "@better-auth/expo/client";
 import axios, { AxiosError } from "axios";
 import * as SecureStore from "expo-secure-store";
 
 export const apiClient = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL! as string,
+  baseURL: process.env.EXPO_PUBLIC_API_URL!,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
@@ -11,14 +12,15 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(async (config) => {
   try {
-    const token = await SecureStore.getItemAsync(
-      "fluencyosmobile_session_token",
-    );
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // The expo client stores all its cookies as a stringified JSON under this key
+    const cookieJSON = await SecureStore.getItemAsync("fluencyosmobile_cookie");
+    if (cookieJSON) {
+      // getCookie converts the JSON object into a standard "Cookie: key=value;" HTTP header string
+      const formattedCookies = getCookie(cookieJSON);
+      config.headers.Cookie = formattedCookies;
     }
   } catch (error) {
-    console.log("Failed to retrieve token from SecureStore❌", error);
+    console.log("Failed to retrieve cookie from SecureStore ❌", error);
   }
 
   return config;
