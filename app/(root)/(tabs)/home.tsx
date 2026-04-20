@@ -28,6 +28,13 @@ interface ApiResponse {
   data?: HomeData[];
   message?: string;
 }
+const fetchHomeData = async () => {
+  // Make sure your backend route strictly matches this endpoint
+  const response = await apiClient.get<ApiResponse>("/api/tests/history");
+
+  // Your backend wraps the array in an object like: { data: [...] }
+  return response.data.data || [];
+};
 
 const HomeTab = () => {
   const { data: session } = authClient.useSession();
@@ -35,13 +42,8 @@ const HomeTab = () => {
   // Template for TanStack Query HTTP GET request via apiClient
   const { data, isLoading, isError, error, refetch, isRefetching } = useQuery({
     queryKey: ["home-data"],
-    queryFn: async () => {
-      // Make sure your backend route strictly matches this endpoint
-      const response = await apiClient.get<ApiResponse>("/api/tests/history");
-
-      // Your backend wraps the array in an object like: { data: [...] }
-      return response.data.data || [];
-    },
+    queryFn: fetchHomeData,
+    refetchOnReconnect: true,
   });
 
   return (
@@ -53,6 +55,7 @@ const HomeTab = () => {
         }
       >
         {/* Header Section */}
+
         <View className="flex-col gap-1">
           <Text className="text-2xl font-bold text-foreground">
             Welcome{session?.user?.name ? `, ${session.user.name}` : ""}

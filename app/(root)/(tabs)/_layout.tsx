@@ -34,6 +34,24 @@ const TabsLayout = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="three"
+        options={{
+          title: "Three",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="address-book" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="four"
+        options={{
+          title: "Four",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="address-book" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 };
