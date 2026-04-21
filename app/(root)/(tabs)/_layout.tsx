@@ -15,7 +15,7 @@ function TabBarIcon({
   return (
     <View className={`flex flex-row items-center justify-center`}>
       <View
-        className={`w-12 h-12 flex items-center justify-center flex-row mt-6 ${focused ? "bg-gray-400 rounded-full" : ""}`}
+        className={`w-12 h-12 flex items-center justify-center flex-row mt-7 ${focused ? "bg-gray-400 rounded-full" : ""}`}
       >
         <Icon size={24} color={color} className="" />
       </View>
@@ -28,6 +28,7 @@ const TabsLayout = () => {
     <Tabs
       initialRouteName="home"
       screenOptions={{
+        animation: "fade",
         tabBarShowLabel: false,
         headerShown: false,
         tabBarActiveTintColor: "black",
