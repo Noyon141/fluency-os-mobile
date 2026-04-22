@@ -14,7 +14,7 @@ import { authClient } from "@/lib/auth-client";
 import { Link, useRouter } from "expo-router";
 import { useRef, useState } from "react";
 
-import { KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Toast } from "toastify-react-native";
 import { Separator } from "../ui/separator";
@@ -61,83 +61,78 @@ export function SignUpForm() {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      className="flex-1 w-full"
-    >
-      <SafeAreaView className="gap-4 w-full flex-1">
-        <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
-          <CardHeader>
-            <CardTitle className="text-center text-3xl sm:text-left font-bold tracking-wider">
-              FluencyOS
-            </CardTitle>
+    <SafeAreaView className="gap-4 w-full flex-1">
+      <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
+        <CardHeader>
+          <CardTitle className="text-center text-3xl sm:text-left font-bold tracking-wider">
+            FluencyOS
+          </CardTitle>
 
-            <CardDescription className="text-center sm:text-left">
-              Create an account to get started
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="gap-6">
-            <View className="gap-6">
-              <View className="gap-1.5">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  placeholder="Your name"
-                  autoComplete="name"
-                  autoCapitalize="words"
-                  returnKeyType="next"
-                  submitBehavior="submit"
-                  onChangeText={setName}
-                />
-              </View>
-              <View className="gap-1.5">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  placeholder="m@example.com"
-                  keyboardType="email-address"
-                  autoComplete="email"
-                  autoCapitalize="none"
-                  onSubmitEditing={onEmailSubmitEditing}
-                  returnKeyType="next"
-                  submitBehavior="submit"
-                  onChangeText={setEmail}
-                />
-              </View>
-              <View className="gap-1.5">
-                <View className="flex-row items-center">
-                  <Label htmlFor="password">Password</Label>
-                </View>
-                <Input
-                  ref={passwordInputRef}
-                  secureTextEntry
-                  placeholder="••••••••"
-                  returnKeyType="send"
-                  onSubmitEditing={onSubmit}
-                  onChangeText={setPassword}
-                />
-              </View>
-              <Button className="w-full" onPress={onSubmit} disabled={loading}>
-                <Text>Sign Up</Text>
-              </Button>
+          <CardDescription className="text-center sm:text-left">
+            Create an account to get started
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="gap-6">
+          <View className="gap-6">
+            <View className="gap-1.5">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                placeholder="Your name"
+                autoComplete="name"
+                autoCapitalize="words"
+                returnKeyType="next"
+                submitBehavior="submit"
+                onChangeText={setName}
+              />
             </View>
-            <Text className="text-center text-sm">
-              Already have an account?{" "}
-              <Link href={"/(auth)/sign-in"}>
-                <Text className="text-sm underline underline-offset-4">
-                  Sign in
-                </Text>
-              </Link>
-            </Text>
-            <View className="flex-row items-center">
-              <Separator className="flex-1" />
-              <Text className="text-muted-foreground px-4 text-sm">or</Text>
-              <Separator className="flex-1" />
+            <View className="gap-1.5">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                placeholder="m@example.com"
+                keyboardType="email-address"
+                autoComplete="email"
+                autoCapitalize="none"
+                onSubmitEditing={onEmailSubmitEditing}
+                returnKeyType="next"
+                submitBehavior="submit"
+                onChangeText={setEmail}
+              />
             </View>
-            <SocialConnections />
-          </CardContent>
-        </Card>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+            <View className="gap-1.5">
+              <View className="flex-row items-center">
+                <Label htmlFor="password">Password</Label>
+              </View>
+              <Input
+                ref={passwordInputRef}
+                secureTextEntry
+                placeholder="••••••••"
+                returnKeyType="send"
+                onSubmitEditing={onSubmit}
+                onChangeText={setPassword}
+              />
+            </View>
+            <Button className="w-full" onPress={onSubmit} disabled={loading}>
+              <Text>Sign Up</Text>
+            </Button>
+          </View>
+          <Text className="text-center text-sm">
+            Already have an account?{" "}
+            <Link href={"/(auth)/sign-in"}>
+              <Text className="text-sm underline underline-offset-4">
+                Sign in
+              </Text>
+            </Link>
+          </Text>
+          <View className="flex-row items-center">
+            <Separator className="flex-1" />
+            <Text className="text-muted-foreground px-4 text-sm">or</Text>
+            <Separator className="flex-1" />
+          </View>
+          <SocialConnections />
+        </CardContent>
+      </Card>
+    </SafeAreaView>
   );
 }
