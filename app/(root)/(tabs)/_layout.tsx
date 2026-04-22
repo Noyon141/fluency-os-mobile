@@ -43,6 +43,9 @@ function TabBarButton({
     <View className={`flex flex-row items-center justify-center`}>
       <Button
         className={`w-12 h-12 flex items-center justify-center flex-row rounded-full mt-3${focused ? "dark:bg-zinc-800 bg-white rounded-full" : ""}`}
+        onPress={() => {
+          console.log("Button pressed✅");
+        }}
       >
         <Icon size={24} color={color} className="" />
       </Button>
