@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const FourTab = () => {
+const SettingsTab = () => {
   return (
     <View>
-      <Text>FourTab</Text>
+      <Text>SettingsTab</Text>
     </View>
   );
 };
 
-export default FourTab;
+export default SettingsTab;

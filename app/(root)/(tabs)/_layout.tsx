@@ -124,9 +124,9 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="four"
+          name="settings"
           options={{
-            title: "Four",
+            title: "Settings",
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon Icon={Settings} color={color} focused={focused} />
             ),

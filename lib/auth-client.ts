@@ -41,6 +41,7 @@ export const authClient = createAuthClient({
     "http://192.168.0.199:3000",
     "http://192.168.0.195:3000",
     "http://192.168.0.198:3000",
+    "http://192.168.0.200:3000",
     "https://cavillingly-unoceanic-lavelle.ngrok-free.dev/",
     "fluencyosmobile://*",
   ],
