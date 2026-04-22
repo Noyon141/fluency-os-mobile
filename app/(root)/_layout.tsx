@@ -11,6 +11,7 @@ const RootLayout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" options={{ title: "Home" }} />
+      <Stack.Screen name="simulator" options={{ title: "Simulator" }} />
     </Stack>
   );
 };
