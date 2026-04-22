@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { ActionDialog } from "@/components/action-dialog";
+import { useActionStore } from "@/store/useActionStore";
 import { Tabs } from "expo-router";
 import {
   Book,
@@ -9,7 +10,7 @@ import {
   Settings,
 } from "lucide-react-native";
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 
 function TabBarIcon({
   Icon,
@@ -39,97 +40,101 @@ function TabBarButton({
   color: string;
   focused: boolean;
 }) {
+  const setOpen = useActionStore((state) => state.setOpen);
   return (
     <View className={`flex flex-row items-center justify-center`}>
-      <Button
-        className={`w-12 h-12 flex items-center justify-center flex-row rounded-full mt-3${focused ? "dark:bg-zinc-800 bg-white rounded-full" : ""}`}
-        onPress={() => {
-          console.log("Button pressed✅");
-        }}
+      <Pressable
+        className={`w-12 h-12 flex items-center justify-center flex-row rounded-full mt-3 ${focused ? "dark:bg-zinc-800 bg-white rounded-full" : ""}`}
+        onPress={() => setOpen(true)}
       >
         <Icon size={24} color={color} className="" />
-      </Button>
+      </Pressable>
     </View>
   );
 }
 
 const TabsLayout = () => {
   return (
-    <Tabs
-      initialRouteName="home"
-      screenOptions={{
-        animation: "fade",
-        tabBarShowLabel: false,
-        headerShown: false,
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "gray",
-        tabBarStyle: {
-          backgroundColor: "transparent",
-          borderRadius: 50,
-          borderWidth: 0,
-          elevation: 0,
-          paddingBottom: 0,
-          paddingTop: 0,
-          height: 70,
-          position: "absolute",
-          marginHorizontal: 20,
-          marginBottom: 20,
-        },
-        tabBarItemStyle: {
-          justifyContent: "center",
-          alignItems: "center",
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon Icon={Home} color={color} focused={focused} />
-          ),
+    <>
+      <Tabs
+        initialRouteName="home"
+        screenOptions={{
+          animation: "fade",
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarActiveTintColor: "black",
+          tabBarInactiveTintColor: "gray",
+          tabBarStyle: {
+            backgroundColor: "transparent",
+            borderRadius: 50,
+            borderWidth: 0,
+            elevation: 0,
+            paddingBottom: 0,
+            paddingTop: 0,
+            height: 70,
+            position: "absolute",
+            marginHorizontal: 20,
+            marginBottom: 20,
+          },
+          tabBarItemStyle: {
+            justifyContent: "center",
+            alignItems: "center",
+          },
         }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: "Two",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon Icon={Search} color={color} focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="add"
-        options={{
-          title: "Add",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarButton Icon={Plus} color={color} focused={focused} />
-          ),
-          // tabBarIcon: ({ color, focused }) => (
-          //   <TabBarIcon Icon={Search} color={color} focused={focused} />
-          // ),
-        }}
-      />
-      <Tabs.Screen
-        name="three"
-        options={{
-          title: "Three",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon Icon={Book} color={color} focused={focused} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="four"
-        options={{
-          title: "Four",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon Icon={Settings} color={color} focused={focused} />
-          ),
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: "Home",
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon Icon={Home} color={color} focused={focused} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="two"
+          options={{
+            title: "Two",
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon Icon={Search} color={color} focused={focused} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="add"
+          options={{
+            title: "Add",
+
+            // tabBarButton: () => <CustomActionButton focused={true} />,
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarButton Icon={Plus} color={color} focused={focused} />
+            ),
+            // tabBarIcon: ({ color, focused }) => (
+            //   <TabBarIcon Icon={Search} color={color} focused={focused} />
+            // ),
+          }}
+        />
+        <Tabs.Screen
+          name="three"
+          options={{
+            title: "Three",
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon Icon={Book} color={color} focused={focused} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="four"
+          options={{
+            title: "Four",
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon Icon={Settings} color={color} focused={focused} />
+            ),
+          }}
+        />
+      </Tabs>
+      <ActionDialog />
+    </>
   );
 };
 
