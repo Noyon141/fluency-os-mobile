@@ -68,15 +68,18 @@ const SimulatorScreen = () => {
   };
 
   const stopAndSubmitRecording = async () => {
-    if (!recorderState.isRecording) return;
-
     setProcessing(true);
 
     try {
       await audioRecorder.stop();
+
       const uri = audioRecorder.uri;
 
-      if (!uri) throw new Error("Failed to get recording URI.");
+      if (!uri) {
+        setProcessing(false);
+        Toast.error("Recording was too short.");
+        return;
+      }
 
       const formData = new FormData();
 
@@ -88,7 +91,7 @@ const SimulatorScreen = () => {
 
       submitMutation.mutate(formData);
     } catch (error) {
-      console.log("Error stopping recording:❌", error);
+      console.log("Error processing recording:❌", error);
       Toast.error("Failed to process recording.");
       setProcessing(false);
     }
@@ -118,8 +121,11 @@ const SimulatorScreen = () => {
           </View>
         ) : (
           <Button
-            onPressIn={startRecording}
-            onPressOut={stopAndSubmitRecording}
+            onPress={
+              recorderState.isRecording
+                ? stopAndSubmitRecording
+                : startRecording
+            }
             disabled={processing}
             className={`h-32 w-32 rounded-full items-center justify-center border-4 ${
               recorderState.isRecording
@@ -130,8 +136,8 @@ const SimulatorScreen = () => {
             {processing ? (
               <ActivityIndicator color="#ffffff" />
             ) : (
-              <Text className="text-white font-bold uppercase tracking-widest">
-                {recorderState.isRecording ? "Recording" : "Hold"}
+              <Text className="text-white font-bold uppercase tracking-widest text-center">
+                {recorderState.isRecording ? "Stop & Submit" : "Tap to Record"}
               </Text>
             )}
           </Button>
