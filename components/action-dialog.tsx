@@ -51,8 +51,8 @@ export const ActionDialog = () => {
 
           <View className="py-4">
             <Text className="text-muted-foreground text-sm">
-              Ready to jump in? Ensure you're in a quiet environment, then click
-              the button below to start.
+              Ready to jump in? Ensure you&apos;re in a quiet environment, then
+              click the button below to start.
             </Text>
           </View>
 
