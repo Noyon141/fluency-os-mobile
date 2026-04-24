@@ -1,35 +1,15 @@
-// import { Button } from "@/components/ui/button";
-// import { Text } from "@/components/ui/text";
-// import React, { useEffect, useState } from "react";
-// import { ActivityIndicator, View } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
-// import { Toast } from "toastify-react-native";
-
 import { Text } from "@/components/ui/text";
+import useUploadAudio from "@/hooks/useUploadAudio";
+import {
+  AudioModule,
+  RecordingPresets,
+  setAudioModeAsync,
+  useAudioRecorder,
+} from "expo-audio";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-// import {
-//   AudioModule,
-//   RecordingPresets,
-//   setAudioModeAsync,
-//   useAudioRecorder,
-//   useAudioRecorderState,
-// } from "expo-audio";
-
-// import { apiClient } from "@/lib/axios";
-
-// const submitRequest = async (formData: FormData) => {
-//   // Let React Native handle the multipart/form-data boundary automatically
-//   const response = await apiClient.post("/api/tests/evaluate", formData, {
-//     headers: {
-//       Accept: "application/json",
-//     },
-//   });
-
-//   return response.data;
-// };
+import { Toast } from "toastify-react-native";
 
 const SimulatorScreen = () => {
   const [scoreCard, setScoreCard] = useState<any>(null);
@@ -121,109 +101,3 @@ const SimulatorScreen = () => {
 };
 
 export default SimulatorScreen;
-
-// import React, { useEffect, useState } from "react";
-// import { ActivityIndicator, Alert, Pressable, Text } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
-
-// import useUploadAudio from "@/hooks/useUploadAudio";
-// import {
-//   AudioModule,
-//   RecordingPresets,
-//   setAudioModeAsync,
-//   useAudioRecorder,
-// } from "expo-audio";
-// import { Toast } from "toastify-react-native";
-import useUploadAudio from "@/hooks/useUploadAudio";
-import {
-  AudioModule,
-  RecordingPresets,
-  setAudioModeAsync,
-  useAudioRecorder,
-} from "expo-audio";
-import { Toast } from "toastify-react-native";
-
-// const SimulatorScreen = () => {
-//   const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
-//   const [recordingUri, setRecordingUri] = useState<string | null>(null);
-
-//   // Bring in our TanStack mutation
-//   const { mutate: uploadAudio, isPending } = useUploadAudio();
-
-//   useEffect(() => {
-//     (async () => {
-//       const status = await AudioModule.requestRecordingPermissionsAsync();
-//       if (!status.granted) {
-//         Toast.error("Permission to access microphone was denied");
-//       }
-
-//       await setAudioModeAsync({
-//         playsInSilentMode: true,
-//         allowsRecording: true,
-//       });
-//     })();
-//   }, []);
-
-//   const toggleRecording = async () => {
-//     if (audioRecorder.isRecording) {
-//       await audioRecorder.stop();
-//       const uri = audioRecorder.uri;
-//       setRecordingUri(uri);
-
-//       console.log("Recording stopped. URI:", uri);
-//     } else {
-//       await audioRecorder.prepareToRecordAsync();
-//       await audioRecorder.record();
-
-//       console.log("Recording started");
-//     }
-//   };
-
-//   const handleUpload = () => {
-//     if (!recordingUri) return;
-
-//     uploadAudio(recordingUri, {
-//       onSuccess: (data) => {
-//         Alert.alert("Success", "Audio uploaded flawlessly.");
-//         setRecordingUri(null); // Reset after upload
-//       },
-//       onError: (error) => {
-//         Alert.alert("Upload Failed", "Check your network and backend.");
-//         console.error(error);
-//       },
-//     });
-//   };
-
-//   return (
-//     <SafeAreaView className="p-4 items-center bg-black">
-//       <Pressable
-//         onPress={toggleRecording}
-//         className={`w-20 h-20 rounded-full items-center justify-center ${audioRecorder.isRecording ? "bg-red-500" : "bg-white"}`}
-//       >
-//         <Text
-//           className={
-//             audioRecorder.isRecording ? "text-white" : "text-black font-bold"
-//           }
-//         >
-//           {audioRecorder.isRecording ? "Stop" : "Record"}
-//         </Text>
-//       </Pressable>
-
-//       {recordingUri && !audioRecorder.isRecording && (
-//         <Pressable
-//           onPress={handleUpload}
-//           disabled={isPending}
-//           className="mt-6 bg-blue-500 px-6 py-3 rounded-lg"
-//         >
-//           {isPending ? (
-//             <ActivityIndicator color="#fff" />
-//           ) : (
-//             <Text className="text-white font-bold text-lg">Send to Server</Text>
-//           )}
-//         </Pressable>
-//       )}
-//     </SafeAreaView>
-//   );
-// };
-
-// export default SimulatorScreen;
